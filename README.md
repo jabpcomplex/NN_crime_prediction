@@ -1,5 +1,4 @@
 # Redes Neuronales para Predicción Criminal
-📌 Descripción
 
 Este repositorio agrupa la implementación de modelos basados en redes neuronales profundas orientados a la predicción espacio–temporal de patrones delictivos a partir de datos geoespaciales. La idea central es transformar secuencias de mapas de calor (rasters) de incidencia criminal mensual en predicciones sobre patrones futuros mediante arquitecturas convolucionales y recurrentes (especialmente ConvLSTM).
 
@@ -12,31 +11,11 @@ Se presentan scripts, notebooks y funciones auxiliares para:
 
 # 📂 Estructura del repositorio
 
-NN_crime_prediction/
-│
-├── RNN LSTM/
-│   ├── LSTM_network_base_911_2018_2023_AB.ipynb          # Versión final actual
-│   ├── otros_notebooks.ipynb     # Notebooks de pruebas previas y experimentos
-│
-├── RNN LSTMConv/
-│   ├── convLSTM_3.ipynb          # Versión final actual del modelo (ConvLSTM)
-│   ├── otros_notebooks.ipynb     # Notebooks de pruebas previas y experimentos
-│   ├── input/
-|       ├── data_loading.py           # Raseters mensuales de incidencia criminal
-|   ├── input2/         # Entrenamiento, callbacks y evaluación
-|       ├── metrics_spatial.py        # Raseters mensuales de incidencia criminal
-│   ├── output/
-│       ├── models/                  # Modelos entrenados guardados
-│       ├── figures/                 # Gráficas de entrenamiento y métricas
-│
-├── requirements.txt             # Dependencias del proyecto
-├── README.md                   # Este documento
-└── LICENSE                     # Términos de uso
+<img src="https://raw.githubusercontent.com/jabpcomplex/NN_crime_prediction/refs/heads/main/estructura_repo.png" alt="logo_complex">
 
+# 📌 Versión final del modelo
 
-#📌 Versión final del modelo
-
-##📍 El archivo
+## 📍 El archivo
 
 RNN LSTMConv/convLSTM_3.ipynb
 
@@ -51,7 +30,7 @@ Este notebook contiene:
 
 Este notebook es el principal punto de partida para reproducir los resultados actuales y para continuar con extensiones del modelo.
 
-#🧠 Arquitectura del modelo
+# 🧠 Arquitectura del modelo
 
 En convLSTM_3.ipynb se emplea una arquitectura ConvLSTM para capturar dependencias espacio–temporales de secuencias de mapas de calor.
 
@@ -75,7 +54,7 @@ Además de métricas globales tradicionales:
 Estas evaluaciones permiten comparar no solo el ajuste numérico de la predicción, sino también la calidad espacial en cuanto a detección de zonas calientes de delito.
 
 
-#📌 Buenas prácticas y recomendaciones
+# 📌 Buenas prácticas y recomendaciones
 
 Mantén las rutas de entrada y salida parametrizadas (variables).
 Loguea métricas y modelos con frameworks como TensorBoard o MLflow.
@@ -83,11 +62,11 @@ Divide el conjunto de datos temporalmente (train/valid/test) respetando secuenci
 Usa transformaciones como log1p para realzar picos en mapas de calor.
 Explora versiones mejoradas de pérdida que consideren IoU directamente.
 
-#📄 Licencia
+# 📄 Licencia
 
 Este proyecto está licenciado bajo GPL v2
 
-#📌 Notas finales
+# 📌 Notas finales
 
 Este repositorio es un espacio de investigación y desarrollo con enfoque en:
 
@@ -95,4 +74,4 @@ Este repositorio es un espacio de investigación y desarrollo con enfoque en:
 - Aplicación de Deep Learning a datos geoespaciales.
 - Evaluación cuantitativa y visual de predicciones.
 
-La versión actual más madura se encuentra en convLSTM_3.ipynb, y se espera que futuras versiones incorporen variantes de arquitectura, pérdida compuesta y análisis comparativo más robusto.
+La versión actual más madura se encuentra en **convLSTM_3.ipynb**, y se espera que futuras versiones incorporen variantes de arquitectura, pérdida compuesta y análisis comparativo más robusto.
