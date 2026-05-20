@@ -1,34 +1,98 @@
-[prompt GPT: Estoy desarrollando una investigación para obtener mi grado de maestría en ciencias de la complejidad por publicación de articulo relacionado al tema de investigación 'Predicción de Hotspots criminales en Perímetro A y B de la CDMX con redes neuronales y LSTM'
-Generame del siguiente  articulo 'Neural networks for geospatial data' con direccion 'https://arxiv.org/html/2304.09157v2'  una tabla con la siguiente información  en formato csv y markdown: nombre de artículo, la unidad de tiempo espacial utilizada para la prediccion en la investigación, el abstract de cada articulo, variables utilizadas como insumos para los modelos y puntos inportantes o relevantes que podria utilizar para mi investigacion, también incluya otros artículos similares para ampliar la base de referencias pon las referencias en formato appa]: #
+# Redes Neuronales para Predicción Criminal
+📌 Descripción
 
-# Análisis de Artículos sobre Redes Neuronales Aplicadas a Datos Geoespaciales
+Este repositorio agrupa la implementación de modelos basados en redes neuronales profundas orientados a la predicción espacio–temporal de patrones delictivos a partir de datos geoespaciales. La idea central es transformar secuencias de mapas de calor (rasters) de incidencia criminal mensual en predicciones sobre patrones futuros mediante arquitecturas convolucionales y recurrentes (especialmente ConvLSTM).
+
+Se presentan scripts, notebooks y funciones auxiliares para:
+
+1. Cargar y preprocesar datos raster de incidencia criminal mensual.
+2. Generar secuencias espacio–temporales para modelos de Deep Learning.
+3. Entrenar, validar y evaluar modelos para predicción multi-step.
+4. Evaluar predicciones con métricas espaciales relevantes para hotspots.
+
+# 📂 Estructura del repositorio
+
+NN_crime_prediction/
+│
+├── RNN LSTM/
+│   ├── LSTM_network_base_911_2018_2023_AB.ipynb          # Versión final actual
+│   ├── otros_notebooks.ipynb     # Notebooks de pruebas previas y experimentos
+│
+├── RNN LSTMConv/
+│   ├── convLSTM_3.ipynb          # Versión final actual del modelo (ConvLSTM)
+│   ├── otros_notebooks.ipynb     # Notebooks de pruebas previas y experimentos
+│   ├── input/
+|       ├── data_loading.py           # Raseters mensuales de incidencia criminal
+|   ├── input2/         # Entrenamiento, callbacks y evaluación
+|       ├── metrics_spatial.py        # Raseters mensuales de incidencia criminal
+│   ├── output/
+│       ├── models/                  # Modelos entrenados guardados
+│       ├── figures/                 # Gráficas de entrenamiento y métricas
+│
+├── requirements.txt             # Dependencias del proyecto
+├── README.md                   # Este documento
+└── LICENSE                     # Términos de uso
 
 
-| Nombre del artículo                                                                                                  | Unidad temporal     | Unidad espacial                                             | Abstract                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           | Variables utilizadas                                                                                                         | Puntos importantes                                                                                                                                                       |
-|----------------------------------------------------------------------------------------------------------------------|---------------------|-------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| **Neural Networks for Geospatial Data**  (El artículo original es una revisión teórica/metodológica por lo que No utiliza unidades espaciotemporales concretas)                      | No aplica           | No aplica   | Revisión integral de arquitecturas de redes neuronales para datos geoespaciales, incluyendo CNNs, GNNs y transformers. Discute retos únicos en datos espaciales no euclidianos y aplicaciones prácticas. | Covariables georreferenciadas (factores ambientales, demográficos, etc.) y coordenadas geográficas de ubicaciones.          | Captura relaciones no lineales en datos espaciales manteniendo la estructura GP ; primer método NN con resultados asintóticos para datos espaciales irregulares ; predicción en ubicaciones nuevas vía kriging.                       |
-| **A Deep Neural Network for Spatiotemporal Prediction of Theft Crimes**                                              | Diaria              | Chicago (EE.UU.), cuadrículas de 1000m y 2000m     | ST-ACLCrime (ConvLSTM + SE) para predecir robos diarios en hotspots . Captura dependencias espaciotemporales finas sin perder la ubicación local . Usa bloque SE para recalibrar canales globales; incorpora componentes temporales de cercanía (closeness), periodo (period) y tendencia (trend). Validado en Chicago (2016-2017) con grid multiescala ; supera en precisión a HA, CNN, LSTM y ConvLSTM .                                                           | Conteos históricos de robos por celda espacial; ventanas temporales de proximidad (closeness), periodicidad (period) y tendencia (trend). | ConvLSTM+SE mejora la predicción de hotspots capturando dependencias finas ; validado en datos reales de Chicago (grid 1000m/2000m) ; supera a métodos clásicos en precisión .                                           |
-| **Geospatial Temporal Crime Prediction Using Convolution and LSTM Neural Networks: Enhancing the Las Vegas Cardiff Model** | Horizonte 30 días   | Las Vegas (EE.UU.), coordenadas (latitud/longitud)          | Modelo CNN+LSTM en datos de crímenes violentos de Las Vegas (LVMPD) para predecir ubicación y hora en 30 días . Solo-LSTM obtuvo RMSE=8.621; CNN+LSTM alcanza MSE=0.0009 al incluir componente espacial . Con latitud/longitud precisas, genera mapas de calor predictivos de hotspots.                                                                                                                                                                                                                      | Registros de crímenes violentos con tiempo y latitud/longitud.                                | CNN espacial mejora la predicción: MSE=0.0009 vs RMSE=8.621 (LSTM solo) ; permite crear mapas de calor predictivos fiables.                                                                      |
-| **A multi-modal geospatial–temporal LSTM based deep learning framework for predictive modeling of urban mobility patterns** | Intervalo horario    | Nueva York, red de transporte (GPS de taxis, flujos viales, rutas GTFS) | GT-LSTM: modelo multimodal con atención + LSTM para movilidad urbana . Integra GPS de taxis, tráfico rodado, rutas de transporte público (GTFS) e infraestructura vial . La atención lineal pondera features espaciales relevantes; LSTM captura dependencias temporales. Con datos reales de NYC, GT-LSTM reduce 15% MAPE y 20% RMSE vs ConvLSTM/GCN .                                                                                                           | Datos multimodales de movilidad: posiciones GPS con tiempo, flujos de tráfico, rutas de transporte (GTFS), características viales. | GT-LSTM mejora predicción integrando atención espacial + LSTM temporal (15% menos MAPE) ; captura dinámicas complejas urbanas; supera ConvLSTM y GCN.                                               |
-| **Innovative LSGTime Model for Crime Spatiotemporal Prediction Based on MindSpore Framework**                        | Diaria              | Zonas urbanas (p.ej. Los Ángeles)                           | LGSTime: LSTM + GRU + atención multi-cabezal dispersa . LSTM/GRU capturan dependencias a largo plazo (estacionalidad, periodicidad); la atención dispersa enfoca características temporales y espaciales clave. En 4 datasets reales, mejora 2.8% MSE, 1.9% MAE y 1.4% RMSE vs CNN base .                                                                                                                                                                              | Series temporales de conteos diarios de delitos en distritos urbanos.                        | Combina LSTM+GRU+atención para patrones espaciotemporales complejos ; muestra mejoras pequeñas pero consistentes sobre CNN .                                                             |
-| **Graph Deep Learning Model for Network-based Predictive Hotspot Mapping of Sparse Spatio-Temporal Events**          | Diaria              | Red vial urbana (nodos de calle) - South Chicago            | GLDNet: modelo DL para hotspots en datos esparsos de red vial urbana . Usa grafo de calles; módulo gated para propagación temporal y 'diffusion network' localizada para propagación espacial . Regresión desequilibrada con pérdida ponderada. En South Chicago supera en 12-25% el hit rate (10-20% cobertura) vs métodos estándar .                                                                                                                                                   | Incidentes de crimen diarios asignados a nodos de la red vial.                              | Primer modelo DL para hotspots en red vial urbana ; aborda escasez de datos con pérdida ponderada; mejora significativa en hit rate frente a métodos tradicionales .                      |
+#📌 Versión final del modelo
+
+##📍 El archivo
+
+RNN LSTMConv/convLSTM_3.ipynb
+
+es la versión final hasta el momento del modelo de predicción.
+Este notebook contiene:
+
+- La carga de datos raster (incidencia delictiva mensual).
+- El preprocesamiento (normalización, redimensionamiento).
+- La definición y entrenamiento del modelo ConvLSTM.
+- La evaluación con métricas globales (MAE, RMSE) y espaciales (IoU, PAI).
+- La predicción autoregresiva de hasta 12 meses futuros.
+
+Este notebook es el principal punto de partida para reproducir los resultados actuales y para continuar con extensiones del modelo.
+
+#🧠 Arquitectura del modelo
+
+En convLSTM_3.ipynb se emplea una arquitectura ConvLSTM para capturar dependencias espacio–temporales de secuencias de mapas de calor.
+
+- Entrada: secuencias de rasters normalizados (shape: time × height × width × channels).
+- Salida: predicción del siguiente paso temporal, luego extendida a 12 meses en predicción autoregresiva.
+- Entrenamiento: pérdida MAE (y variantes con ponderación espacial si se activa).
+- Callbacks: EarlyStopping, ReduceLROnPlateau y ModelCheckpoint.
+- Métricas de evaluación
+
+Además de métricas globales tradicionales:
 
 
-- Zhan, W., & Datta, A. (2023). Neural networks for geospatial data. arXiv:2304.09157.
-- Lv, X., Jing, C., Wang, Y., & Jin, S. (2022). A deep neural network for spatiotemporal prediction of theft crimes. International Archives of the Photogrammetry, Remote Sensing and Spatial Information Sciences, XLVIII-3/W2, 35–42. https://doi.org/10.5194/isprs-archives-XLVIII-3-W2-2022-35-2022
-- Holmes, C. D., Orji, C., & Papesh, C. (2024). Geospatial Temporal Crime Prediction Using Convolution and LSTM Neural Networks: Enhancing the Las Vegas Cardiff Model. SMU Data Science Review, 8(2), Article 3. Recuperado de https://scholar.smu.edu/datasciencereview/vol8/iss2/3
-- Sangeetha, S. K. B., Mathivanan, S. K., Rajadurai, H., Cho, J., & Easwaramoorthy, S. V. (2024). A multi-modal geospatial–temporal LSTM based deep learning framework for predictive modeling of urban mobility patterns. Scientific Reports, 14, 31579. https://doi.org/10.1038/s41598-024-74237-3
-- Qin, Z., Wei, B., & Gao, C. (2025). Innovative LSGTime Model for Crime Spatiotemporal Prediction Based on MindSpore Framework. arXiv:2503.20136.
-- Zhang, Y., & Cheng, T. (2020). Graph deep learning model for network-based predictive hotspot mapping of sparse spatio-temporal events. Computers, Environment and Urban Systems, 80, 101500.
-
-[prompt DS: Estoy desarrollando una investigación para obtener mi grado de maestría en ciencias de la complejidad por publicación de articulo relacionado al tema de investigación 'Predicción de Hotspots criminales en Perímetro A y B de la CDMX con redes neuronales convolusionales y LSTM'
-Generame del siguiente  articulo 'Neural networks for geospatial data' con direccion 'https://arxiv.org/html/2304.09157v2'  una tabla con la siguiente información  en formato csv y markdown: nombre de artículo, la unidad de tiempo espacial utilizada para la prediccion en la investigación, el abstract de cada articulo, variables utilizadas como insumos para los modelos y puntos inportantes o relevantes que podria utilizar para mi investigacion]: #
-
-# Análisis de Artículos sobre Redes Neuronales Aplicadas a Datos Geoespaciales (table 2)
+| Métrica | Qué mide |
+|--- | --- |
+| MAE |Error absoluto medio de predicción pixel a pixel|
+| RMSE|Raíz de error cuadrático medio|
+| IoU (Intersection over Union)|Coincidencia espacial entre hotspots reales y predichos|
+| PAI (Prediction Accuracy Index) | Relación entre crímenes dentro de hotspots y área cubierta|
 
 
-| Nombre de Artículo                                                                 | Unidad de Tiempo Espacial          | Abstract                                                                                                                                                                                                 | Variables Utilizadas                                                                 | Puntos Relevantes para tu Investigación                                                               |
-|------------------------------------------------------------------------------------|------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------|
-| [**Zonas Calientes y Análisis Predictivo en Mar del Plata**](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=2975778)                | Cuadrículas censales (mensual)     | Estudio comparativo de hotspots y Near Repeat Victimization para robo en viviendas/comercios. Uso de Índice de Acierto (PAI) para validación.                                                            | Datos históricos de delitos, densidad poblacional, uso de suelo                     | 1. Método PAI para validación 2. Combinación de teoría de revictimización con análisis espacial          |
-| [**IA y Video-vigilancia en Predicción de Delitos**](https://biblat.unam.mx/es/revista/revista-criminalidad/articulo/la-inteligencia-artificial-y-la-video-vigilancia-en-la-prediccion-y-deteccion-de-delitos-en-espacio-tiempo-una-revision-sistematica)                       | Manzanas urbanas (semanal)         | Revisión sistemática de técnicas espacio-temporales con IA. Destaca redes neuronales como método efectivo para detección de hotspots en Bogotá.                                                          | Datos de videovigilancia, reportes policiales, variables socioeconómicas           | 1. Integración GIS con redes neuronales 2. Protocolos para datos desbalanceados en predicción criminal   |
-| [**Aplicaciones de Redes Neuronales en Ingeniería Biomédica**](https://www.redalyc.org/journal/5537/553768213002/html/)             | Nivel molecular a poblacional      | Revisión metodológica de arquitecturas ANN/DL aplicables a problemas complejos. Incluye MLP, CNN y LSTM para análisis espacio-temporal.        | Datos biomédicos multivariados, imágenes médicas        | 1. Transfer learning de modelos biomédicos 2. Técnicas de regularización para datos escasos     
+Estas evaluaciones permiten comparar no solo el ajuste numérico de la predicción, sino también la calidad espacial en cuanto a detección de zonas calientes de delito.
+
+
+#📌 Buenas prácticas y recomendaciones
+
+Mantén las rutas de entrada y salida parametrizadas (variables).
+Loguea métricas y modelos con frameworks como TensorBoard o MLflow.
+Divide el conjunto de datos temporalmente (train/valid/test) respetando secuencia cronológica.
+Usa transformaciones como log1p para realzar picos en mapas de calor.
+Explora versiones mejoradas de pérdida que consideren IoU directamente.
+
+#📄 Licencia
+
+Este proyecto está licenciado bajo GPL v2
+
+#📌 Notas finales
+
+Este repositorio es un espacio de investigación y desarrollo con enfoque en:
+
+- Modelado espacio–temporal de fenómenos urbanos.
+- Aplicación de Deep Learning a datos geoespaciales.
+- Evaluación cuantitativa y visual de predicciones.
+
+La versión actual más madura se encuentra en convLSTM_3.ipynb, y se espera que futuras versiones incorporen variantes de arquitectura, pérdida compuesta y análisis comparativo más robusto.
