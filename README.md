@@ -62,6 +62,13 @@ Divide el conjunto de datos temporalmente (train/valid/test) respetando secuenci
 Usa transformaciones como log1p para realzar picos en mapas de calor.
 Explora versiones mejoradas de pérdida que consideren IoU directamente.
 
+
+# 🧪 Trazabilidad experimental
+
+Para evolucionar el proyecto sin perder comparabilidad, se añadió un registro de versiones en `experiments/model_versions.md` y una hoja de ruta científica en `docs/research_roadmap.md`. Toda nueva versión debe conservar la evaluación multi-horizonte (`t+1` a `t+12`) y reportar MAE, RMSE, IoU y PAI antes de considerarse comparable con ConvLSTM V3.
+
+La prioridad de desarrollo queda definida como: estabilidad espacial, mejora de IoU, mantenimiento de PAI alto y control de homogenización temporal. La siguiente evolución recomendada es agregar atención sobre ConvLSTM, manteniendo ConvLSTM V3 como línea base científica.
+
 # 📄 Licencia
 
 Este proyecto está licenciado bajo GPL v2
