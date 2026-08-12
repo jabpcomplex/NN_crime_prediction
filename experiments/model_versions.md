@@ -26,6 +26,7 @@ La comparación entre modelos solo es válida si se mantienen constantes los dat
 | V3 | ConvLSTM inicial | Red profunda base | Superado | Tendencia a predicciones homogéneas |
 | V4 | ConvLSTM V3 final | Modelo seleccionado | Activo | Mejor balance MAE/RMSE/IoU/PAI |
 | V5 | ConvLSTM multi-scale | Ablación de complejidad espacial | No seleccionado | IoU/PAI similares, MAE/RMSE peores; posible sobreajuste |
+| V6 | ConvLSTM con atención espacial | Evolución temporal/autoregresiva | Implementado para evaluación | Busca mejorar estabilidad t+12, IoU y PAI sin cambiar el protocolo |
 
 ## ConvLSTM V3 seleccionado
 
@@ -90,3 +91,14 @@ Una versión solo puede considerarse comparable si:
 4. conserva el split temporal;
 5. explica limitaciones técnicas y éticas;
 6. no reemplaza ConvLSTM V3 sin una mejora clara en IoU, PAI y estabilidad de t+12.
+
+
+## ConvLSTM V6 con atención espacial
+
+La siguiente entrega implementa un modelo ConvLSTM compatible con V3 que añade una puerta de atención espacial sobre las características recurrentes. La predicción sigue siendo residual y autoregresiva: el modelo estima un delta sobre el último frame observado y luego realimenta cada predicción para evaluar `t+1` a `t+12`.
+
+Archivos principales:
+
+- `src/crime_prediction/attention_convlstm.py`: constructor del modelo, pérdida híbrida y forecasting autoregresivo.
+- `src/crime_prediction/metrics.py`: evaluación reusable de MAE, RMSE, IoU y PAI por horizonte.
+- `configs/attention_convlstm_v6.md`: ficha científica de la entrega con problema, justificación, referencias e impacto esperado.

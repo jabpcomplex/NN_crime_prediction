@@ -69,6 +69,8 @@ Para evolucionar el proyecto sin perder comparabilidad, se añadió un registro 
 
 La prioridad de desarrollo queda definida como: estabilidad espacial, mejora de IoU, mantenimiento de PAI alto y control de homogenización temporal. La siguiente evolución recomendada es agregar atención sobre ConvLSTM, manteniendo ConvLSTM V3 como línea base científica.
 
+Entrega implementada: `src/crime_prediction/attention_convlstm.py` incorpora ConvLSTM con atención espacial como V6 experimental, y `src/crime_prediction/metrics.py` centraliza la evaluación MAE/RMSE/IoU/PAI por horizonte para reutilizarla desde notebooks de Colab.
+
 # 📄 Licencia
 
 Este proyecto está licenciado bajo GPL v2
